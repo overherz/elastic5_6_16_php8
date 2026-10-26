@@ -130,12 +130,12 @@ class Term extends AbstractSuggest
 
     /**
      * Which string distance implementation to use for comparing how similar suggested terms are.
-     * Five possible values can be specified:.
+     * Five possible values can be specified (Elasticsearch 5.6 spelling):.
      *
      * - internal
      * - damerau_levenshtein
-     * - levenshtein
-     * - jaro_winkler
+     * - levenstein
+     * - jarowinkler
      * - ngram
      *
      * @param string $distanceAlgrorithm

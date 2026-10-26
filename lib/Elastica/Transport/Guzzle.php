@@ -61,7 +61,7 @@ class Guzzle extends AbstractTransport
             'headers' => [
                 'Content-Type' => $request->getContentType(),
             ],
-            'exceptions' => false, // 4xx and 5xx is expected and NOT an exceptions in this context
+            'http_errors' => false, // 4xx and 5xx is expected and NOT an exceptions in this context
         ];
         if ($connection->getTimeout()) {
             $options['timeout'] = $connection->getTimeout();
@@ -141,7 +141,7 @@ class Guzzle extends AbstractTransport
             }
 
             $req = $req->withBody(
-                Psr7\stream_for(is_array($data)
+                Psr7\Utils::streamFor(is_array($data)
                     ? JSON::stringify($data, JSON_UNESCAPED_UNICODE)
                     : $data
                 )

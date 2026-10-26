@@ -6,7 +6,6 @@ use Aws\Credentials\CredentialProvider;
 use Aws\Credentials\Credentials;
 use Aws\Signature\SignatureV4;
 use Elastica\Connection;
-use GuzzleHttp;
 use GuzzleHttp\Client;
 use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Middleware;
@@ -17,7 +16,7 @@ class AwsAuthV4 extends Guzzle
     protected function _getGuzzleClient($persistent = true)
     {
         if (!$persistent || !self::$_guzzleClientConnection) {
-            $stack = HandlerStack::create(GuzzleHttp\choose_handler());
+            $stack = HandlerStack::create();
             $stack->push($this->getSigningMiddleware(), 'sign');
 
             self::$_guzzleClientConnection = new Client([

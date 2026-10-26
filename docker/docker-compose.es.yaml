@@ -1,25 +1,28 @@
 version: '3.4'
 
+# The Docker Hub elasticsearch:5.x images ignore settings passed as environment
+# variables, so every setting is passed as an -E flag.
 services:
   es01:
-    image: docker.elastic.co/elasticsearch/elasticsearch-oss:${ES_VERSION:-6.5.2}
+    image: elasticsearch:${ES_VERSION:-5.6.16}
     command: >
       /bin/sh -c "./bin/elasticsearch-plugin list | grep -q ingest-attachment
       || ./bin/elasticsearch-plugin install --batch ingest-attachment;
-      /usr/local/bin/docker-entrypoint.sh"
-    environment:
-      - node.name=es01
-      - node.max_local_storage_nodes=2
-      - cluster.name=es-docker-cluster
-      - bootstrap.memory_lock=true
-      - discovery.zen.minimum_master_nodes=2
-      - path.repo=/usr/share/elasticsearch/data
-      - processors=1
-      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+      exec /docker-entrypoint.sh elasticsearch
+      -Enode.name=es01
+      -Enode.max_local_storage_nodes=2
+      -Ecluster.name=es-docker-cluster
+      -Ediscovery.zen.minimum_master_nodes=2
+      -Ediscovery.zen.ping.unicast.hosts=es02
+      -Epath.repo=/usr/share/elasticsearch/data
+      -Enetwork.host=0.0.0.0
+      -Eprocessors=1"
     ulimits:
-      memlock:
-        soft: -1
-        hard: -1
+      nofile:
+        soft: 65536
+        hard: 65536
+    environment:
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
     volumes:
       - esdata:/usr/share/elasticsearch/data
     ports:
@@ -27,25 +30,25 @@ services:
     networks:
       - elastic
   es02:
-    image: docker.elastic.co/elasticsearch/elasticsearch-oss:${ES_VERSION:-6.5.2}
+    image: elasticsearch:${ES_VERSION:-5.6.16}
     command: >
       /bin/sh -c "./bin/elasticsearch-plugin list | grep -q ingest-attachment
       || ./bin/elasticsearch-plugin install --batch ingest-attachment;
-      /usr/local/bin/docker-entrypoint.sh"
-    environment:
-      - node.name=es02
-      - node.max_local_storage_nodes=2
-      - cluster.name=es-docker-cluster
-      - bootstrap.memory_lock=true
-      - discovery.zen.ping.unicast.hosts=es01
-      - discovery.zen.minimum_master_nodes=2
-      - path.repo=/usr/share/elasticsearch/data
-      - processors=1
-      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+      exec /docker-entrypoint.sh elasticsearch
+      -Enode.name=es02
+      -Enode.max_local_storage_nodes=2
+      -Ecluster.name=es-docker-cluster
+      -Ediscovery.zen.minimum_master_nodes=2
+      -Ediscovery.zen.ping.unicast.hosts=es01
+      -Epath.repo=/usr/share/elasticsearch/data
+      -Enetwork.host=0.0.0.0
+      -Eprocessors=1"
     ulimits:
-      memlock:
-        soft: -1
-        hard: -1
+      nofile:
+        soft: 65536
+        hard: 65536
+    environment:
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
     volumes:
       - esdata:/usr/share/elasticsearch/data
     networks:
