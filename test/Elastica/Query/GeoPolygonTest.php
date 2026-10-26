@@ -17,7 +17,7 @@ class GeoPolygonTest extends BaseTest
     {
         $index = $this->_createIndex();
 
-        $type = $index->getType('_doc');
+        $type = $index->getType('doc');
 
         // Set mapping
         $type->setMapping(['location' => ['type' => 'geo_point']]);

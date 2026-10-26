@@ -20,8 +20,8 @@ class ResponseExceptionTest extends AbstractExceptionTest
         } catch (ResponseException $ex) {
             $error = $ex->getResponse()->getFullError();
 
-            $this->assertNotEquals('index_already_exists_exception', $error['type']);
-            $this->assertEquals('resource_already_exists_exception', $error['type']);
+            // resource_already_exists_exception only appeared in Elasticsearch 6.0
+            $this->assertEquals('index_already_exists_exception', $error['type']);
             $this->assertEquals(400, $ex->getResponse()->getStatus());
         }
     }
@@ -32,7 +32,7 @@ class ResponseExceptionTest extends AbstractExceptionTest
     public function testBadType()
     {
         $index = $this->_createIndex();
-        $type = $index->getType('_doc');
+        $type = $index->getType('doc');
 
         $type->setMapping([
             'num' => [

@@ -66,7 +66,7 @@ class SpanMultiTest extends BaseTest
         $text5 = 'Nullam pharetra mi vitae sollicitudin fermentum. Proin sed enim consequat, consectetur eros vitae, egestas metus';
 
         $index = $this->_createIndex();
-        $type = $index->getType('_doc');
+        $type = $index->getType('doc');
 
         $type->addDocuments([
             new Document(1, [$field => $text1]),

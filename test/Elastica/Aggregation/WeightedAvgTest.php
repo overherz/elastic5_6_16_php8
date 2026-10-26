@@ -13,7 +13,7 @@ class WeightedAvgTest extends BaseAggregationTest
     {
         $index = $this->_createIndex();
 
-        $index->getType('_doc')->addDocuments([
+        $index->getType('doc')->addDocuments([
             new Document(1, ['price' => 5, 'weight' => 3]),
             new Document(2, ['price' => 8, 'weight' => 1]),
             new Document(3, ['price' => 1, 'weight' => 1]),

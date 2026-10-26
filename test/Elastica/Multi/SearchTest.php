@@ -39,7 +39,7 @@ class SearchTest extends BaseTest
         $docs[] = new Document(9, ['id' => 1, 'email' => 'test@test.com', 'username' => 'bunny']);
         $docs[] = new Document(10, ['id' => 1, 'email' => 'test@test.com', 'username' => 'bunny']);
         $docs[] = new Document(11, ['id' => 1, 'email' => 'test@test.com', 'username' => 'bunny']);
-        $type = $index->getType('_doc');
+        $type = $index->getType('doc');
         $type->addDocuments($docs);
         $index->refresh();
 

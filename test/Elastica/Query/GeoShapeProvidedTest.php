@@ -17,7 +17,7 @@ class GeoShapeProvidedTest extends BaseTest
     public function testSearch()
     {
         $index = $this->_createIndex();
-        $type = $index->getType('_doc');
+        $type = $index->getType('doc');
 
         // create mapping
         $mapping = new Mapping($type, [

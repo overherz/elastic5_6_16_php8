@@ -16,9 +16,9 @@ class TopHitsTest extends BaseAggregationTest
 {
     protected function _getIndexForTest()
     {
-        $index = $this->_createIndex();
+        $index = $this->_createIndex(null, true, 1, ['mapping.single_type' => true]);
 
-        $mapping = new Mapping($index->getType('_doc'), [
+        $mapping = new Mapping($index->getType('doc'), [
             'tags' => ['type' => 'keyword'],
             'title' => ['type' => 'keyword'],
             'my_join_field' => [

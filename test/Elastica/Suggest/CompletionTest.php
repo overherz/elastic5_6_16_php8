@@ -17,7 +17,7 @@ class CompletionTest extends BaseTest
     protected function _getIndexForTest()
     {
         $index = $this->_createIndex();
-        $type = $index->getType('_doc');
+        $type = $index->getType('doc');
 
         $type->setMapping([
             'fieldName' => [

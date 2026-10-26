@@ -16,14 +16,14 @@ class CardinalityTest extends BaseAggregationTest
     {
         $index = $this->_createIndex();
 
-        $mapping = new Mapping($index->getType('_doc'), [
+        $mapping = new Mapping($index->getType('doc'), [
             'color' => [
                 'type' => 'keyword',
             ],
         ]);
-        $index->getType('_doc')->setMapping($mapping);
+        $index->getType('doc')->setMapping($mapping);
 
-        $index->getType('_doc')->addDocuments([
+        $index->getType('doc')->addDocuments([
             new Document(1, ['color' => 'blue']),
             new Document(2, ['color' => 'blue']),
             new Document(3, ['color' => 'red']),

@@ -16,7 +16,7 @@ class TermTest extends BaseTest
     protected function _getIndexForTest()
     {
         $index = $this->_createIndex();
-        $type = $index->getType('_doc');
+        $type = $index->getType('doc');
         $type->addDocuments([
             new Document(1, ['id' => 1, 'text' => 'GitHub']),
             new Document(2, ['id' => 1, 'text' => 'Elastic']),
@@ -82,7 +82,7 @@ class TermTest extends BaseTest
 
         $suggest2 = new Term('suggest2', '_all');
         $suggest2->setSuggestMode(Term::SUGGEST_MODE_POPULAR);
-        $suggest2->setStringDistanceAlgorithm('jaro_winkler');
+        $suggest2->setStringDistanceAlgorithm('jarowinkler');
         $suggest->addSuggestion($suggest2->setText('Girhub'));
 
         $expected = [
@@ -98,7 +98,7 @@ class TermTest extends BaseTest
                     'term' => [
                         'field' => '_all',
                         'suggest_mode' => 'popular',
-                        'string_distance' => 'jaro_winkler',
+                        'string_distance' => 'jarowinkler',
                     ],
                     'text' => 'Girhub',
                 ],
@@ -118,7 +118,7 @@ class TermTest extends BaseTest
         $suggest->addSuggestion($suggest1->setText('Foor seach'));
         $suggest2 = new Term('suggest2', 'text');
         $suggest->addSuggestion($suggest2->setText('Girhub'));
-        $suggest2->setStringDistanceAlgorithm('jaro_winkler');
+        $suggest2->setStringDistanceAlgorithm('jarowinkler');
 
         $index = $this->_getIndexForTest();
         $result = $index->search($suggest);

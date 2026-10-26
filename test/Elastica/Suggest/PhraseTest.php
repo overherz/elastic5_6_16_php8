@@ -17,7 +17,7 @@ class PhraseTest extends BaseTest
     protected function _getIndexForTest()
     {
         $index = $this->_createIndex();
-        $type = $index->getType('_doc');
+        $type = $index->getType('doc');
         $type->addDocuments([
             new Document(1, ['text' => 'Github is pretty cool']),
             new Document(2, ['text' => 'Elasticsearch is bonsai cool']),

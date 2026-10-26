@@ -62,7 +62,7 @@ class WildcardTest extends BaseTest
         ];
 
         $index->create($indexParams, true);
-        $type = $index->getType('_doc');
+        $type = $index->getType('doc');
 
         $mapping = new Mapping($type, [
                 'name' => ['type' => 'text', 'analyzer' => 'lw'],

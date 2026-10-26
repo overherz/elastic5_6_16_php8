@@ -12,7 +12,7 @@ class GeoBoundsTest extends BaseAggregationTest
     private function getIndexForTest()
     {
         $index = $this->_createIndex();
-        $type = $index->getType('_doc');
+        $type = $index->getType('doc');
 
         $type->setMapping(new Mapping(null, [
             'location' => ['type' => 'geo_point'],
@@ -40,9 +40,9 @@ class GeoBoundsTest extends BaseAggregationTest
         $query->addAggregation($agg);
         $results = $this->getIndexForTest()->search($query)->getAggregation('viewport');
 
-        $this->assertEquals(37.782438984141, $results['bounds']['top_left']['lat']);
-        $this->assertEquals(-122.39256000146, $results['bounds']['top_left']['lon']);
-        $this->assertEquals(32.798319971189, $results['bounds']['bottom_right']['lat']);
-        $this->assertEquals(-117.24664804526, $results['bounds']['bottom_right']['lon']);
+        $this->assertEqualsWithDelta(37.782438984141, $results['bounds']['top_left']['lat'], 0.0000000001);
+        $this->assertEqualsWithDelta(-122.39256000146, $results['bounds']['top_left']['lon'], 0.0000000001);
+        $this->assertEqualsWithDelta(32.798319971189, $results['bounds']['bottom_right']['lat'], 0.0000000001);
+        $this->assertEqualsWithDelta(-117.24664804526, $results['bounds']['bottom_right']['lon'], 0.0000000001);
     }
 }

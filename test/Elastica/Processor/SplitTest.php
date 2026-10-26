@@ -57,7 +57,7 @@ class SplitTest extends BasePipelineTest
         $pipeline->addProcessor($split)->create();
 
         $index = $this->_createIndex();
-        $type = $index->getType('_doc');
+        $type = $index->getType('doc');
 
         // Add document to normal index
         $doc1 = new Document(null, ['name' => 'nicolas&ruflin']);

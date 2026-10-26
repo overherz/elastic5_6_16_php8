@@ -62,9 +62,11 @@ class SettingsTest extends BaseTest
     }
 
     /**
+     * Elasticsearch 5.6 deletes the concrete index behind the alias, 6.0 started to reject it.
+     *
      * @group functional
      */
-    public function testDeleteAliasWithException()
+    public function testDeleteAliasDeletesConcreteIndex()
     {
         $indexName = 'deletetestaliasexception';
         $aliasName = 'deletetestaliasexception_alias';
@@ -75,17 +77,9 @@ class SettingsTest extends BaseTest
 
         $index->addAlias($aliasName);
 
-        $indexAlias = $client->getIndex($aliasName);
+        $client->getIndex($aliasName)->delete();
 
-        try {
-            $indexAlias->delete();
-            $this->fail('Should throw exception because you should delete the concrete index and not the alias');
-        } catch (ResponseException $e) {
-            $error = $e->getResponse()->getFullError();
-
-            $this->assertSame('illegal_argument_exception', $error['type']);
-            $this->assertStringContainsString('specify the corresponding concrete indices instead.', $error['reason']);
-        }
+        $this->assertFalse($index->exists());
     }
 
     /**
@@ -266,7 +260,7 @@ class SettingsTest extends BaseTest
         $doc2 = new Document(null, ['hello' => 'world']);
         $doc3 = new Document(null, ['hello' => 'world']);
 
-        $type = $index->getType('_doc');
+        $type = $index->getType('doc');
         $type->addDocument($doc1);
         $this->assertFalse($index->getSettings()->getReadOnly());
 

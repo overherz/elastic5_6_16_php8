@@ -38,7 +38,7 @@ class JoinTest extends BasePipelineTest
         $pipeline->addProcessor($join)->create();
 
         $index = $this->_createIndex();
-        $type = $index->getType('_doc');
+        $type = $index->getType('doc');
 
         // Add document to normal index
         $doc1 = new Document(null, ['name' => ['abc', 'def', 'ghij']]);

@@ -73,7 +73,7 @@ class ConvertTest extends BasePipelineTest
         $pipeline->addProcessor($append)->create();
 
         $index = $this->_createIndex();
-        $type = $index->getType('_doc');
+        $type = $index->getType('doc');
 
         // Add document to normal index
         $doc1 = new Document(null, ['name' => 'ruflin', 'type' => 'elastica', 'foo' => '5.290']);

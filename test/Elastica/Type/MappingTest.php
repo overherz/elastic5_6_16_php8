@@ -19,7 +19,7 @@ class MappingTest extends BaseTest
         $index = $client->getIndex('test');
 
         $index->create([], true);
-        $type = $index->getType('_doc');
+        $type = $index->getType('doc');
 
         $mapping = new Mapping($type,
             [
@@ -72,7 +72,7 @@ class MappingTest extends BaseTest
         $index = $client->getIndex('test');
 
         $index->create([], true);
-        $type = $index->getType('_doc');
+        $type = $index->getType('doc');
 
         $mapping = new Mapping($type,
             [
@@ -118,7 +118,7 @@ class MappingTest extends BaseTest
         $client = $this->_getClient();
         $index = $client->getIndex('testjoinparentid');
         $index->create([], true);
-        $type = $index->getType('_doc');
+        $type = $index->getType('doc');
 
         $mapping = new Mapping();
         $mapping->setType($type);
@@ -135,7 +135,7 @@ class MappingTest extends BaseTest
         ]);
 
         $expected = [
-            '_doc' => [
+            'doc' => [
                 'properties' => [
                     'firstname' => ['type' => 'text', 'store' => true],
                     'lastname' => ['type' => 'text'],
@@ -157,14 +157,14 @@ class MappingTest extends BaseTest
             'my_join_field' => [
                 'name' => 'question',
             ],
-        ], '_doc');
+        ], 'doc');
 
         $doc2 = new Document(2, [
             'text' => 'this is the 2nd question',
             'my_join_field' => [
                 'name' => 'question',
             ],
-        ], '_doc');
+        ], 'doc');
 
         $index->addDocuments([$doc1, $doc2]);
 
@@ -174,7 +174,7 @@ class MappingTest extends BaseTest
                 'name' => 'answer',
                 'parent' => 1,
             ],
-        ], '_doc');
+        ], 'doc');
 
         $doc4 = new Document(4, [
             'text' => 'this is an answer, the 2nd',
@@ -182,7 +182,7 @@ class MappingTest extends BaseTest
                 'name' => 'answer',
                 'parent' => 2,
             ],
-        ], '_doc');
+        ], 'doc');
 
         $index->addDocuments([$doc3, $doc4]);
         $index->refresh();
@@ -201,7 +201,7 @@ class MappingTest extends BaseTest
     public function testMappingExample()
     {
         $index = $this->_createIndex();
-        $type = $index->getType('_doc');
+        $type = $index->getType('doc');
 
         $mapping = new Mapping($type,
             [
@@ -247,7 +247,7 @@ class MappingTest extends BaseTest
     public function testDynamicTemplate()
     {
         $index = $this->_createIndex();
-        $type = $index->getType('_doc');
+        $type = $index->getType('doc');
         $rawFieldsType = ['raw' => ['type' => 'keyword']];
 
         $mapping = new Mapping($type);
@@ -272,14 +272,14 @@ class MappingTest extends BaseTest
         $index->refresh();
 
         $newMapping = $type->getMapping();
-        $this->assertArrayHasKey('properties', $newMapping['_doc']);
-        $this->assertArrayHasKey('multiname', $newMapping['_doc']['properties']);
+        $this->assertArrayHasKey('properties', $newMapping['doc']);
+        $this->assertArrayHasKey('multiname', $newMapping['doc']['properties']);
         $this->assertSame(
             [
                 'type' => 'text',
                 'fields' => $rawFieldsType,
             ],
-            $newMapping['_doc']['properties']['multiname'],
+            $newMapping['doc']['properties']['multiname'],
             'Mapping of dynamic "multiname" field should have been created with the type "{dynamic_type}" resolved to "text". '.
             'The "multiname.raw" sub-field should be of type "keyword".'
         );
@@ -293,7 +293,7 @@ class MappingTest extends BaseTest
     public function testSetMeta()
     {
         $index = $this->_createIndex();
-        $type = $index->getType('_doc');
+        $type = $index->getType('doc');
         $mapping = new Mapping($type, [
             'firstname' => ['type' => 'text', 'store' => true],
             'lastname' => ['type' => 'text'],
@@ -302,7 +302,7 @@ class MappingTest extends BaseTest
         $type->setMapping($mapping);
 
         $mappingData = $type->getMapping();
-        $this->assertEquals('test', $mappingData['_doc']['_meta']['class']);
+        $this->assertEquals('test', $mappingData['doc']['_meta']['class']);
 
         $index->delete();
     }
@@ -313,7 +313,7 @@ class MappingTest extends BaseTest
     public function testGetters()
     {
         $index = $this->_createIndex();
-        $type = $index->getType('_doc');
+        $type = $index->getType('doc');
         $properties = [
             'firstname' => ['type' => 'text', 'store' => true],
             'lastname' => ['type' => 'text'],

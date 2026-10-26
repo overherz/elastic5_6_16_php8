@@ -51,7 +51,7 @@ class GuzzleTest extends BaseTest
 
         $index = $client->getIndex('dynamic_http_method_test');
         $index->create([], true);
-        $type = $index->getType('_doc');
+        $type = $index->getType('doc');
         $type->addDocument(new Document(1, ['test' => 'test']));
         $index->refresh();
         $resultSet = $index->search('test');
@@ -146,7 +146,7 @@ class GuzzleTest extends BaseTest
         $index->create([], true);
         $this->_waitForAllocation($index);
 
-        $type = $index->getType('_doc');
+        $type = $index->getType('doc');
         $type->addDocument(new Document(1, ['test' => 'test']));
 
         $index->refresh();

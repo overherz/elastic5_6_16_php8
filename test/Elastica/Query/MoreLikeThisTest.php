@@ -25,7 +25,7 @@ class MoreLikeThisTest extends BaseTest
         $index->getSettings()->setNumberOfReplicas(0);
         //$index->getSettings()->setNumberOfShards(1);
 
-        $type = new Type($index, '_doc');
+        $type = new Type($index, 'doc');
         $mapping = new Mapping($type, [
             'email' => ['store' => true, 'type' => 'text', 'index' => true],
             'content' => ['store' => true, 'type' => 'text',  'index' => true],
@@ -67,7 +67,7 @@ class MoreLikeThisTest extends BaseTest
         $index = $client->getIndex('elastica_test');
         $index->create(['index' => ['number_of_shards' => 1, 'number_of_replicas' => 0]], true);
 
-        $type = new Type($index, '_doc');
+        $type = new Type($index, 'doc');
 
         $type->addDocuments([
             new Document(1, ['visible' => true, 'name' => 'bruce wayne batman']),
@@ -279,7 +279,7 @@ class MoreLikeThisTest extends BaseTest
     public function testToArrayForId()
     {
         $query = new MoreLikeThis();
-        $query->setLike(new Document(1, [], '_doc', 'index'));
+        $query->setLike(new Document(1, [], 'doc', 'index'));
 
         $data = $query->toArray();
 
@@ -287,7 +287,7 @@ class MoreLikeThisTest extends BaseTest
             ['more_like_this' => [
                 'like' => [
                     '_id' => 1,
-                    '_type' => '_doc',
+                    '_type' => 'doc',
                     '_index' => 'index',
                 ],
             ],
@@ -302,14 +302,14 @@ class MoreLikeThisTest extends BaseTest
     public function testToArrayForSource()
     {
         $query = new MoreLikeThis();
-        $query->setLike(new Document('', ['Foo' => 'Bar'], '_doc', 'index'));
+        $query->setLike(new Document('', ['Foo' => 'Bar'], 'doc', 'index'));
 
         $data = $query->toArray();
 
         $this->assertEquals(
             ['more_like_this' => [
                 'like' => [
-                    '_type' => '_doc',
+                    '_type' => 'doc',
                     '_index' => 'index',
                     'doc' => [
                         'Foo' => 'Bar',

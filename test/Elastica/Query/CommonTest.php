@@ -35,7 +35,7 @@ class CommonTest extends BaseTest
     public function testQuery()
     {
         $index = $this->_createIndex();
-        $type = $index->getType('_doc');
+        $type = $index->getType('doc');
 
         $docs = [
             new Document(1, ['body' => 'foo baz']),

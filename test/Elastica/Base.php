@@ -64,7 +64,7 @@ class Base extends TestCase
      *
      * @return Client
      */
-    protected function _getClient(array $params = [], $callback = null, LoggerInterface $logger = null)
+    protected function _getClient(array $params = [], $callback = null, ?LoggerInterface $logger = null)
     {
         $config = [
             'host' => $this->_getHost(),
@@ -119,7 +119,7 @@ class Base extends TestCase
      *
      * @return Index
      */
-    protected function _createIndex($name = null, $delete = true, $shards = 1)
+    protected function _createIndex($name = null, $delete = true, $shards = 1, array $settings = [])
     {
         if (is_null($name)) {
             $name = preg_replace('/[^a-z]/i', '', strtolower(get_called_class()).uniqid());
@@ -127,7 +127,7 @@ class Base extends TestCase
 
         $client = $this->_getClient();
         $index = $client->getIndex('elastica_'.$name);
-        $index->create(['index' => ['number_of_shards' => $shards, 'number_of_replicas' => 1]], $delete);
+        $index->create(['index' => ['number_of_shards' => $shards, 'number_of_replicas' => 1] + $settings], $delete);
 
         return $index;
     }

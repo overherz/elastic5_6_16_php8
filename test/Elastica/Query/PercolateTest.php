@@ -29,6 +29,7 @@ class PercolateTest extends BaseTest
         //Match a document to the registered percolator queries:
         $percolateQuery = new Percolate();
         $percolateQuery->setField('query')
+            ->setDocumentType($this->documentType->getName())
             ->setDocument($doc->getData());
         $resultSet = $this->index->search($percolateQuery);
 
@@ -47,6 +48,7 @@ class PercolateTest extends BaseTest
         $doc2 = new Document(4, ['message' => 'Just a simple text for test']);
         $percolateQuery = new Percolate();
         $percolateQuery->setField('query')
+            ->setDocumentType($this->documentType->getName())
             ->setDocument($doc2->getData());
         $resultSet = $this->index->search($percolateQuery);
 
@@ -68,6 +70,7 @@ class PercolateTest extends BaseTest
 
         $percolateQuery = new Percolate();
         $percolateQuery->setField('query')
+            ->setDocumentType($this->documentType->getName())
             ->setExistingDocumentType($this->documentType->getName())
             ->setDocumentIndex($this->documentType->getIndex()->getName())
             ->setDocumentId($doc->getId());
@@ -86,6 +89,7 @@ class PercolateTest extends BaseTest
         $this->documentType->addDocument($doc2);
         $percolateQuery = new Percolate();
         $percolateQuery->setField('query')
+            ->setDocumentType($this->documentType->getName())
             ->setExistingDocumentType($this->documentType->getName())
             ->setDocumentIndex($this->documentType->getIndex()->getName())
             ->setDocumentId($doc2->getId());
@@ -100,7 +104,7 @@ class PercolateTest extends BaseTest
         $this->index->getSettings()->setNumberOfReplicas(0);
         //The doctype mapping is the mapping used to preprocess the document
         // defined in the percolator query before it gets indexed into a temporary index.
-        $this->documentType = $this->index->getType('_doc');
+        $this->documentType = $this->index->getType('doc');
         //The queries mapping is the mapping used for indexing the query documents.
         $this->documentType->setMapping(['message' => ['type' => 'text'], 'query' => ['type' => 'percolator']]);
     }
@@ -131,6 +135,20 @@ class PercolateTest extends BaseTest
         $data = $query->toArray();
 
         $this->assertEquals($data['percolate']['document'], $doc->getData());
+    }
+
+    /**
+     * @group unit
+     */
+    public function testSetDocumentType()
+    {
+        $type = 'type';
+        $query = new Percolate();
+        $query->setDocumentType($type);
+
+        $data = $query->toArray();
+
+        $this->assertEquals($data['percolate']['document_type'], $type);
     }
 
     /**

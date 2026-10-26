@@ -89,8 +89,8 @@ class SearchTest extends BaseTest
 
         $index = $this->_createIndex();
 
-        $type1 = $index->getType('_doc');
-        $type2 = $index->getType('_doc');
+        $type1 = $index->getType('doc');
+        $type2 = $index->getType('doc');
 
         $this->assertEquals([], $search->getTypes());
 
@@ -126,8 +126,8 @@ class SearchTest extends BaseTest
         $index = $client->getIndex('foo');
 
         $types = [];
-        $types[] = $index->getType('_doc');
-        $types[] = $index->getType('_doc');
+        $types[] = $index->getType('doc');
+        $types[] = $index->getType('doc');
 
         $search->addTypes($types);
 
@@ -185,8 +185,8 @@ class SearchTest extends BaseTest
         $index1 = $this->_createIndex();
         $index2 = $this->_createIndex();
 
-        $type1 = $index1->getType('_doc');
-        $type2 = $index1->getType('_doc');
+        $type1 = $index1->getType('doc');
+        $type2 = $index1->getType('doc');
 
         // No index
         $this->assertEquals('/_search', $search1->getPath());
@@ -220,7 +220,7 @@ class SearchTest extends BaseTest
         $client = $this->_getClient();
         $search1 = new Search($client);
         $index1 = $this->_createIndex();
-        $type1 = $index1->getType('_doc');
+        $type1 = $index1->getType('doc');
 
         $result = $search1->search([]);
         $this->assertFalse($result->getResponse()->hasError());
@@ -247,7 +247,7 @@ class SearchTest extends BaseTest
         $client = $this->_getClient();
 
         $index = $this->_createIndex();
-        $type = $index->getType('_doc');
+        $type = $index->getType('doc');
 
         $docs = [];
         for ($x = 1; $x <= 10; ++$x) {
@@ -306,7 +306,7 @@ class SearchTest extends BaseTest
         $index = $client->getIndex('zero');
         $index->create(['index' => ['number_of_shards' => 1, 'number_of_replicas' => 0]], true);
 
-        $type = $index->getType('_doc');
+        $type = $index->getType('doc');
         $type->addDocuments([
             new Document(1, ['id' => 1, 'email' => 'test@test.com', 'username' => 'farrelley']),
             new Document(2, ['id' => 1, 'email' => 'test@test.com', 'username' => 'farrelley']),
@@ -349,7 +349,7 @@ class SearchTest extends BaseTest
             $docs[] = new Document($i, ['id' => 1, 'email' => 'test@test.com', 'username' => 'test']);
         }
 
-        $type = $index->getType('_doc');
+        $type = $index->getType('doc');
         $type->addDocuments($docs);
         $index->refresh();
 
@@ -429,7 +429,7 @@ class SearchTest extends BaseTest
     {
         $index = $this->_createIndex();
         $doc = new Document(1, ['id' => 1, 'email' => 'test@test.com', 'username' => 'ruflin']);
-        $index->getType('_doc')->addDocument($doc);
+        $index->getType('doc')->addDocument($doc);
         $index->refresh();
 
         $search = new Search($index->getClient());
@@ -457,7 +457,7 @@ class SearchTest extends BaseTest
         $index = $client->getIndex('zero');
         $index->create(['index' => ['number_of_shards' => 1, 'number_of_replicas' => 0]], true);
 
-        $type = $index->getType('_doc');
+        $type = $index->getType('doc');
         $type->addDocuments([
             new Document(1, ['id' => 1, 'email' => 'test@test.com', 'username' => 'farrelley']),
             new Document(2, ['id' => 1, 'email' => 'test@test.com', 'username' => 'farrelley']),
@@ -501,7 +501,7 @@ class SearchTest extends BaseTest
 
         $index = $client->getIndex('zero');
         $index->create(['index' => ['number_of_shards' => 1, 'number_of_replicas' => 0]], true);
-        $type = $index->getType('_doc');
+        $type = $index->getType('doc');
         $type->addDocuments([
             new Document(1, ['id' => 1, 'email' => 'test@test.com', 'username' => 'farrelley']),
             new Document(2, ['id' => 1, 'email' => 'test@test.com', 'username' => 'farrelley']),
@@ -541,7 +541,7 @@ class SearchTest extends BaseTest
     {
         $index = $this->_createIndex();
         $search = new Search($index->getClient());
-        $type = $index->getType('_doc');
+        $type = $index->getType('doc');
 
         $doc = new Document(1, ['id' => 1, 'username' => 'ruflin']);
 

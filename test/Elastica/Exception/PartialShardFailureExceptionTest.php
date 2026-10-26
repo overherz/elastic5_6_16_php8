@@ -24,7 +24,7 @@ class PartialShardFailureExceptionTest extends AbstractExceptionTest
             ],
         ], true);
 
-        $type = $index->getType('_doc');
+        $type = $index->getType('doc');
 
         $type->addDocument(new Document('', ['name' => 'ruflin']));
         $type->addDocument(new Document('', ['name' => 'bobrik']));

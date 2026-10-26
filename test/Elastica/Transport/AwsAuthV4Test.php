@@ -3,6 +3,7 @@
 namespace Elastica\Test\Transport;
 
 use Elastica\Exception\Connection\GuzzleException;
+use GuzzleHttp\Exception\ConnectException;
 use GuzzleHttp\Exception\RequestException;
 
 class AwsAuthV4Test extends GuzzleTest
@@ -36,7 +37,7 @@ class AwsAuthV4Test extends GuzzleTest
             $client->request('_status', 'GET');
         } catch (GuzzleException $e) {
             $guzzleException = $e->getGuzzleException();
-            if ($guzzleException instanceof RequestException) {
+            if ($guzzleException instanceof RequestException || $guzzleException instanceof ConnectException) {
                 $request = $guzzleException->getRequest();
                 $expected = 'AWS4-HMAC-SHA256 Credential=foo/'
                     .date('Ymd').'/us-east-1/es/aws4_request, ';
@@ -72,7 +73,7 @@ class AwsAuthV4Test extends GuzzleTest
             $this->assertEquals(80, $client->getLastRequest()->toArray()['port']);
         } catch (GuzzleException $e) {
             $guzzleException = $e->getGuzzleException();
-            if ($guzzleException instanceof RequestException) {
+            if ($guzzleException instanceof RequestException || $guzzleException instanceof ConnectException) {
                 $request = $guzzleException->getRequest();
             }
         }
@@ -95,7 +96,7 @@ class AwsAuthV4Test extends GuzzleTest
             $client->request('_status', 'GET');
         } catch (GuzzleException $e) {
             $guzzleException = $e->getGuzzleException();
-            if ($guzzleException instanceof RequestException) {
+            if ($guzzleException instanceof RequestException || $guzzleException instanceof ConnectException) {
                 $request = $guzzleException->getRequest();
 
                 $this->assertEquals('https', $request->getUri()->getScheme());
@@ -119,7 +120,7 @@ class AwsAuthV4Test extends GuzzleTest
             $client->request('_status', 'GET');
         } catch (GuzzleException $e) {
             $guzzleException = $e->getGuzzleException();
-            if ($guzzleException instanceof RequestException) {
+            if ($guzzleException instanceof RequestException || $guzzleException instanceof ConnectException) {
                 $request = $guzzleException->getRequest();
                 $expected = 'AWS4-HMAC-SHA256 Credential=foo/'
                     .date('Ymd').'/us-east-1/es/aws4_request, ';

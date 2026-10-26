@@ -109,7 +109,7 @@ class ScrollTest extends Base
     {
         $index = $this->_createIndex();
         $index->refresh();
-        $type = $index->getType('_doc');
+        $type = $index->getType('doc');
 
         if ($indexSize > 0) {
             $docs = [];

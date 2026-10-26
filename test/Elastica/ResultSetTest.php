@@ -18,7 +18,7 @@ class ResultSetTest extends BaseTest
     public function testGetters()
     {
         $index = $this->_createIndex();
-        $type = $index->getType('_doc');
+        $type = $index->getType('doc');
 
         $type->addDocuments([
             new Document(1, ['name' => 'elastica search']),
@@ -45,7 +45,7 @@ class ResultSetTest extends BaseTest
     public function testArrayAccess()
     {
         $index = $this->_createIndex();
-        $type = $index->getType('_doc');
+        $type = $index->getType('doc');
 
         $type->addDocuments([
             new Document(1, ['name' => 'elastica search']),
@@ -70,7 +70,7 @@ class ResultSetTest extends BaseTest
     public function testDocumentsAccess()
     {
         $index = $this->_createIndex();
-        $type = $index->getType('_doc');
+        $type = $index->getType('doc');
 
         $type->addDocuments([
             new Document(1, ['name' => 'elastica search']),
@@ -102,7 +102,7 @@ class ResultSetTest extends BaseTest
         $this->expectException(\Elastica\Exception\InvalidException::class);
 
         $index = $this->_createIndex();
-        $type = $index->getType('_doc');
+        $type = $index->getType('doc');
 
         $doc = new Document(1, ['name' => 'elastica search']);
         $type->addDocument($doc);
@@ -122,7 +122,7 @@ class ResultSetTest extends BaseTest
         $this->expectException(\Elastica\Exception\InvalidException::class);
 
         $index = $this->_createIndex();
-        $type = $index->getType('_doc');
+        $type = $index->getType('doc');
 
         $doc = new Document(1, ['name' => 'elastica search']);
         $type->addDocument($doc);

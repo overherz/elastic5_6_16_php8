@@ -19,7 +19,7 @@ class InnerHitsTest extends BaseTest
     private function _getIndexForNestedTest()
     {
         $index = $this->_createIndex();
-        $type = $index->getType('_doc');
+        $type = $index->getType('doc');
 
         $mapping = new Mapping();
         $mapping->setType($type);
@@ -91,8 +91,8 @@ class InnerHitsTest extends BaseTest
 
     private function _getIndexForParentChildrenTest()
     {
-        $index = $this->_createIndex();
-        $questionType = $index->getType('_doc');
+        $index = $this->_createIndex(null, true, 1, ['mapping.single_type' => true]);
+        $questionType = $index->getType('doc');
 
         // Parent
         $mappingQuestion = new Mapping();
@@ -120,35 +120,35 @@ class InnerHitsTest extends BaseTest
                 'my_join_field' => [
                     'name' => 'questions',
                 ],
-            ], '_doc'),
+            ], 'doc'),
             new Document(2, [
                 'last_activity_date' => '2014-12-23',
                 'title' => 'Question about linux #2',
                 'my_join_field' => [
                     'name' => 'questions',
                 ],
-            ], '_doc'),
+            ], 'doc'),
             new Document(3, [
                 'last_activity_date' => '2015-01-05',
                 'title' => 'Question about windows #1',
                 'my_join_field' => [
                     'name' => 'questions',
                 ],
-            ], '_doc'),
+            ], 'doc'),
             new Document(4, [
                 'last_activity_date' => '2014-12-23',
                 'title' => 'Question about windows #2',
                 'my_join_field' => [
                     'name' => 'questions',
                 ],
-            ], '_doc'),
+            ], 'doc'),
             new Document(5, [
                 'last_activity_date' => '2014-12-23',
                 'title' => 'Question about osx',
                 'my_join_field' => [
                     'name' => 'questions',
                 ],
-            ], '_doc'),
+            ], 'doc'),
         ]);
 
         $documentResponse1 = new Document(6, [
@@ -158,7 +158,7 @@ class InnerHitsTest extends BaseTest
                 'name' => 'answers',
                 'parent' => 1,
             ],
-        ], '_doc', $index->getName());
+        ], 'doc', $index->getName());
 
         $documentResponse2 = new Document(7, [
             'answer' => 'linux is bad',
@@ -167,7 +167,7 @@ class InnerHitsTest extends BaseTest
                 'name' => 'answers',
                 'parent' => 1,
             ],
-        ], '_doc', $index->getName());
+        ], 'doc', $index->getName());
 
         $documentResponse3 = new Document(8, [
             'answer' => 'windows was cool',
@@ -176,7 +176,7 @@ class InnerHitsTest extends BaseTest
                 'name' => 'answers',
                 'parent' => 2,
             ],
-        ], '_doc', $index->getName());
+        ], 'doc', $index->getName());
 
         $this->_getClient()->addDocuments([$documentResponse1, $documentResponse2, $documentResponse3], ['routing' => 1]);
 
@@ -328,10 +328,10 @@ class InnerHitsTest extends BaseTest
         $child = (new HasChild($query, 'answers'))->setInnerHits($innerHits);
 
         $ind = $this->_getIndexForParentChildrenTest();
-        $t = $ind->getType('_doc');
+        $t = $ind->getType('doc');
         $r = $t->search($child);
 
-        return $this->_getIndexForParentChildrenTest()->getType('_doc')->search($child);
+        return $this->_getIndexForParentChildrenTest()->getType('doc')->search($child);
     }
 
     /**

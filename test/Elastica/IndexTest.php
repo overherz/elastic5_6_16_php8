@@ -29,7 +29,7 @@ class IndexTest extends BaseTest
         $index = $this->_createIndex();
         $doc = new Document(1, ['id' => 1, 'email' => 'test@test.com', 'username' => 'hanswurst', 'test' => ['2', '3', '5']]);
 
-        $type = $index->getType('_doc');
+        $type = $index->getType('doc');
 
         $mapping = ['id' => ['type' => 'integer', 'store' => true], 'email' => ['type' => 'text'],
             'username' => ['type' => 'text'], 'test' => ['type' => 'integer'], ];
@@ -40,11 +40,11 @@ class IndexTest extends BaseTest
 
         $storedMapping = $index->getMapping();
 
-        $this->assertEquals($storedMapping['_doc']['properties']['id']['type'], 'integer');
-        $this->assertEquals($storedMapping['_doc']['properties']['id']['store'], true);
-        $this->assertEquals($storedMapping['_doc']['properties']['email']['type'], 'text');
-        $this->assertEquals($storedMapping['_doc']['properties']['username']['type'], 'text');
-        $this->assertEquals($storedMapping['_doc']['properties']['test']['type'], 'integer');
+        $this->assertEquals($storedMapping['doc']['properties']['id']['type'], 'integer');
+        $this->assertEquals($storedMapping['doc']['properties']['id']['store'], true);
+        $this->assertEquals($storedMapping['doc']['properties']['email']['type'], 'text');
+        $this->assertEquals($storedMapping['doc']['properties']['username']['type'], 'text');
+        $this->assertEquals($storedMapping['doc']['properties']['test']['type'], 'integer');
 
         $result = $type->search('hanswurst');
     }
@@ -60,7 +60,7 @@ class IndexTest extends BaseTest
         $aliasName = 'test-mapping-alias';
         $index->addAlias($aliasName);
 
-        $type = new Type($index, '_doc');
+        $type = new Type($index, 'doc');
         $mapping = new Mapping($type, [
                 'id' => ['type' => 'integer', 'store' => 'true'],
             ]);
@@ -127,7 +127,7 @@ class IndexTest extends BaseTest
         $doc1 = new Document(null, ['name' => 'ruflin']);
         $doc2 = new Document(null, ['name' => 'nicolas']);
 
-        $type = $index->getType('_doc');
+        $type = $index->getType('doc');
         $type->addDocument($doc1);
         $type->addDocument($doc2);
 
@@ -149,7 +149,7 @@ class IndexTest extends BaseTest
     public function testDeleteByQueryWithQueryString()
     {
         $index = $this->_createIndex();
-        $type1 = new Type($index, '_doc');
+        $type1 = new Type($index, 'doc');
         $type1->addDocument(new Document(1, ['name' => 'ruflin nicolas']));
         $type1->addDocument(new Document(2, ['name' => 'ruflin']));
         $index->refresh();
@@ -180,7 +180,7 @@ class IndexTest extends BaseTest
     public function testDeleteByQueryWithQuery()
     {
         $index = $this->_createIndex();
-        $type1 = new Type($index, '_doc');
+        $type1 = new Type($index, 'doc');
         $type1->addDocument(new Document(1, ['name' => 'ruflin nicolas']));
         $type1->addDocument(new Document(2, ['name' => 'ruflin']));
         $index->refresh();
@@ -211,7 +211,7 @@ class IndexTest extends BaseTest
     public function testDeleteByQueryWithArrayQuery()
     {
         $index = $this->_createIndex();
-        $type1 = new Type($index, '_doc');
+        $type1 = new Type($index, 'doc');
         $type1->addDocument(new Document(1, ['name' => 'ruflin nicolas']));
         $type1->addDocument(new Document(2, ['name' => 'ruflin']));
         $index->refresh();
@@ -246,7 +246,7 @@ class IndexTest extends BaseTest
         $routing1 = 'first_routing';
         $routing2 = 'second_routing';
 
-        $type = new Type($index, '_doc');
+        $type = new Type($index, 'doc');
         $doc = new Document(1, ['name' => 'ruflin nicolas']);
         $doc->setRouting($routing1);
         $type->addDocument($doc);
@@ -302,7 +302,7 @@ class IndexTest extends BaseTest
     public function testUpdateByQueryWithQueryString()
     {
         $index = $this->_createIndex();
-        $type1 = new Type($index, '_doc');
+        $type1 = new Type($index, 'doc');
         $type1->addDocument(new Document(1, ['name' => 'ruflin nicolas']));
         $type1->addDocument(new Document(2, ['name' => 'ruflin']));
         $index->refresh();
@@ -336,7 +336,7 @@ class IndexTest extends BaseTest
     public function testUpdateByQueryAll()
     {
         $index = $this->_createIndex();
-        $type1 = new Type($index, '_doc');
+        $type1 = new Type($index, 'doc');
         $type1->addDocument(new Document(1, ['name' => 'ruflin nicolas']));
         $type1->addDocument(new Document(2, ['name' => 'ruflin']));
         $index->refresh();
@@ -447,7 +447,7 @@ class IndexTest extends BaseTest
         $client = $this->_getClient();
         $index = $client->getIndex('test');
         $index->create([], true);
-        $type = new Type($index, '_doc');
+        $type = new Type($index, 'doc');
 
         $doc1 = new Document(1);
         $doc1->set('title', 'Hello world');
@@ -528,7 +528,7 @@ class IndexTest extends BaseTest
     public function testIndexGetMapping()
     {
         $index = $this->_createIndex();
-        $type = $index->getType('_doc');
+        $type = $index->getType('doc');
 
         $mapping = ['id' => ['type' => 'integer', 'store' => true], 'email' => ['type' => 'text'],
             'username' => ['type' => 'text'], 'test' => ['type' => 'integer'], ];
@@ -537,11 +537,11 @@ class IndexTest extends BaseTest
         $index->refresh();
         $indexMappings = $index->getMapping();
 
-        $this->assertEquals($indexMappings['_doc']['properties']['id']['type'], 'integer');
-        $this->assertEquals($indexMappings['_doc']['properties']['id']['store'], true);
-        $this->assertEquals($indexMappings['_doc']['properties']['email']['type'], 'text');
-        $this->assertEquals($indexMappings['_doc']['properties']['username']['type'], 'text');
-        $this->assertEquals($indexMappings['_doc']['properties']['test']['type'], 'integer');
+        $this->assertEquals($indexMappings['doc']['properties']['id']['type'], 'integer');
+        $this->assertEquals($indexMappings['doc']['properties']['id']['store'], true);
+        $this->assertEquals($indexMappings['doc']['properties']['email']['type'], 'text');
+        $this->assertEquals($indexMappings['doc']['properties']['username']['type'], 'text');
+        $this->assertEquals($indexMappings['doc']['properties']['test']['type'], 'integer');
     }
 
     /**
@@ -582,7 +582,7 @@ class IndexTest extends BaseTest
         $docs[] = new Document(10, ['id' => 1, 'email' => 'test@test.com', 'username' => 'farrelley']);
         $docs[] = new Document(11, ['id' => 1, 'email' => 'test@test.com', 'username' => 'farrelley']);
 
-        $type = $index->getType('_doc');
+        $type = $index->getType('doc');
         $type->addDocuments($docs);
         $index->refresh();
 
@@ -661,9 +661,9 @@ class IndexTest extends BaseTest
         $this->assertTrue($search->hasIndex($index));
         $this->assertEquals([], $search->getTypes());
         $this->assertFalse($search->hasTypes());
-        $this->assertFalse($search->hasType('_doc'));
+        $this->assertFalse($search->hasType('doc'));
 
-        $type = new Type($index, '_doc');
+        $type = new Type($index, 'doc');
         $this->assertFalse($search->hasType($type));
     }
 
@@ -674,7 +674,7 @@ class IndexTest extends BaseTest
     {
         $index = $this->_createIndex();
 
-        $type = new Type($index, '_doc');
+        $type = new Type($index, 'doc');
 
         $docs = [];
         $docs[] = new Document(1, ['username' => 'hans', 'test' => ['2', '3', '5']]);
@@ -706,7 +706,7 @@ class IndexTest extends BaseTest
     {
         $index = $this->_createIndex();
 
-        $type = new Type($index, '_doc');
+        $type = new Type($index, 'doc');
 
         $docs = [];
         $docs[] = new Document(1, ['foo' => 'bar']);

@@ -48,7 +48,7 @@ class QueryStringTest extends BaseTest
     {
         $index = $this->_createIndex();
         $index->getSettings()->setNumberOfReplicas(0);
-        $type = $index->getType('_doc');
+        $type = $index->getType('doc');
 
         $doc = new Document(1, ['email' => 'test@test.com', 'username' => 'hanswurst', 'test' => ['2', '3', '5']]);
         $type->addDocument($doc);
@@ -68,7 +68,7 @@ class QueryStringTest extends BaseTest
     public function testSearchFields()
     {
         $index = $this->_createIndex();
-        $type = $index->getType('_doc');
+        $type = $index->getType('doc');
 
         $doc = new Document(1, ['title' => 'hello world', 'firstname' => 'nicolas', 'lastname' => 'ruflin', 'price' => '102', 'year' => '2012']);
         $type->addDocument($doc);
@@ -90,7 +90,7 @@ class QueryStringTest extends BaseTest
     public function testSearchFieldsValidationException()
     {
         $index = $this->_createIndex();
-        $type = $index->getType('_doc');
+        $type = $index->getType('doc');
 
         $doc = new Document(1, ['title' => 'hello world', 'firstname' => 'nicolas', 'lastname' => 'ruflin', 'price' => '102', 'year' => '2012']);
         $type->addDocument($doc);
@@ -311,7 +311,7 @@ class QueryStringTest extends BaseTest
         $query->setBoost(9.3);
 
         $doc = new Document('', ['name' => 'test']);
-        $index->getType('_doc')->addDocument($doc);
+        $index->getType('doc')->addDocument($doc);
         $index->refresh();
 
         $resultSet = $index->search($query);

@@ -13,13 +13,13 @@ class MissingTest extends BaseAggregationTest
     {
         $index = $this->_createIndex();
 
-        $mapping = new Mapping($index->getType('_doc'), [
+        $mapping = new Mapping($index->getType('doc'), [
             'price' => ['type' => 'keyword'],
             'color' => ['type' => 'keyword'],
         ]);
-        $index->getType('_doc')->setMapping($mapping);
+        $index->getType('doc')->setMapping($mapping);
 
-        $index->getType('_doc')->addDocuments([
+        $index->getType('doc')->addDocuments([
             new Document(1, ['price' => 5, 'color' => 'blue']),
             new Document(2, ['price' => 8, 'color' => 'blue']),
             new Document(3, ['price' => 1]),

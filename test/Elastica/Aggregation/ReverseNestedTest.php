@@ -25,7 +25,7 @@ class ReverseNestedTest extends BaseAggregationTest
             ],
             'tags' => ['type' => 'keyword'],
         ]);
-        $type = $index->getType('_doc');
+        $type = $index->getType('doc');
         $type->setMapping($mapping);
 
         $type->addDocuments([

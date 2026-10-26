@@ -16,7 +16,7 @@ class FunctionScoreTest extends BaseTest
     protected function _getIndexForTest()
     {
         $index = $this->_createIndex();
-        $type = $index->getType('_doc');
+        $type = $index->getType('doc');
 
         $type->setMapping([
             'name' => ['type' => 'text', 'index' => 'false'],
@@ -295,7 +295,7 @@ class FunctionScoreTest extends BaseTest
     {
         $filter = new Term(['price' => 4.5]);
         $query = new FunctionScore();
-        $query->addRandomScoreFunction(2, $filter, null, '_id');
+        $query->addRandomScoreFunction(2, $filter);
 
         $expected = [
             'function_score' => [
@@ -303,7 +303,6 @@ class FunctionScoreTest extends BaseTest
                     [
                         'random_score' => [
                             'seed' => 2,
-                            'field' => '_id',
                         ],
                         'filter' => [
                             'term' => [
@@ -333,7 +332,7 @@ class FunctionScoreTest extends BaseTest
     {
         $filter = new Term(['price' => 4.5]);
         $query = new FunctionScore();
-        $query->addRandomScoreFunction(2, $filter, null, '_id');
+        $query->addRandomScoreFunction(2, $filter);
 
         $expected = [
             'function_score' => [
@@ -341,7 +340,6 @@ class FunctionScoreTest extends BaseTest
                     [
                         'random_score' => [
                             'seed' => 2,
-                            'field' => '_id',
                         ],
                         'filter' => [
                             'term' => [

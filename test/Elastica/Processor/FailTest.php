@@ -40,7 +40,7 @@ class FailTest extends BasePipelineTest
             ->create();
 
         $index = $this->_createIndex();
-        $type = $index->getType('_doc');
+        $type = $index->getType('doc');
 
         // Add document to normal index
         $doc1 = new Document(null, ['name' => '']);

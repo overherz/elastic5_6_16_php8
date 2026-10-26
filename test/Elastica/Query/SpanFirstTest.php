@@ -39,7 +39,7 @@ class SpanFirstTest extends BaseTest
         $value = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse odio lacus, aliquam nec nulla quis, aliquam eleifend eros.';
 
         $index = $this->_createIndex();
-        $type = $index->getType('_doc');
+        $type = $index->getType('doc');
 
         $docHitData = [$field => $value];
         $doc = new Document(1, $docHitData);

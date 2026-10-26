@@ -61,7 +61,7 @@ class AttachmentTest extends BasePipelineTest
         $pipeline->create();
 
         $index = $this->_createIndex();
-        $type = $index->getType('_doc');
+        $type = $index->getType('doc');
 
         $bulk = new Bulk($index->getClient());
         $bulk->setIndex($index);
@@ -106,7 +106,7 @@ class AttachmentTest extends BasePipelineTest
         $pipeline->create();
 
         $index = $this->_createIndex();
-        $type = $index->getType('_doc');
+        $type = $index->getType('doc');
 
         $bulk = new Bulk($index->getClient());
         $bulk->setIndex($index);
@@ -153,7 +153,7 @@ class AttachmentTest extends BasePipelineTest
         $pipeline->create();
 
         $index = $this->_createIndex();
-        $type = $index->getType('_doc');
+        $type = $index->getType('doc');
 
         $bulk = new Bulk($index->getClient());
         $bulk->setIndex($index);
@@ -203,7 +203,7 @@ class AttachmentTest extends BasePipelineTest
         $indexParams = ['index' => ['number_of_shards' => 1, 'number_of_replicas' => 0]];
 
         $index = $this->_createIndex();
-        $type = new Type($index, '_doc');
+        $type = new Type($index, 'doc');
 
         $mapping = Type\Mapping::create($indexMapping);
         $mapping->setSource(['excludes' => ['data']]);

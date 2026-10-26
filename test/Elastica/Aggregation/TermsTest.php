@@ -13,12 +13,12 @@ class TermsTest extends BaseAggregationTest
     {
         $index = $this->_createIndex();
 
-        $mapping = new Mapping($index->getType('_doc'), [
+        $mapping = new Mapping($index->getType('doc'), [
             'color' => ['type' => 'keyword'],
         ]);
-        $index->getType('_doc')->setMapping($mapping);
+        $index->getType('doc')->setMapping($mapping);
 
-        $index->getType('_doc')->addDocuments([
+        $index->getType('doc')->addDocuments([
             new Document(1, ['color' => 'blue']),
             new Document(2, ['color' => 'blue']),
             new Document(3, ['color' => 'red']),
@@ -71,7 +71,7 @@ class TermsTest extends BaseAggregationTest
         $agg->setField('color');
         $agg->setOrders([
             ['_count' => 'asc'], // 1. red,   2. green, 3. blue
-            ['_key' => 'asc'],   // 1. green, 2. red,   3. blue
+            ['_term' => 'asc'],  // 1. green, 2. red,   3. blue (Elasticsearch 5.6 has no _key order)
         ]);
 
         $query = new Query();

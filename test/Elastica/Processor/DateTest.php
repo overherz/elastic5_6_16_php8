@@ -75,7 +75,7 @@ class DateTest extends BasePipelineTest
         $pipeline->addProcessor($date)->create();
 
         $index = $this->_createIndex();
-        $type = $index->getType('_doc');
+        $type = $index->getType('doc');
 
         // Add document to normal index
         $doc1 = new Document(null, ['date_field' => '2010 12 06 11:05:15']);

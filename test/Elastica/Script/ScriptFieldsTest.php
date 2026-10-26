@@ -75,7 +75,7 @@ class ScriptFieldsTest extends BaseTest
     {
         $index = $this->_createIndex();
 
-        $type = $index->getType('_doc');
+        $type = $index->getType('doc');
 
         $doc = new Document(1, ['firstname' => 'guschti', 'lastname' => 'ruflin']);
         $type->addDocument($doc);
@@ -102,8 +102,8 @@ class ScriptFieldsTest extends BaseTest
     {
         $client = $this->_getClient();
         $index = $client->getIndex('testscriptfieldwithjoin');
-        $index->create([], true);
-        $type = $index->getType('_doc');
+        $index->create(['index' => ['mapping.single_type' => true]], true);
+        $type = $index->getType('doc');
 
         $mapping = new Mapping();
         $mapping->setType($type);
@@ -127,14 +127,14 @@ class ScriptFieldsTest extends BaseTest
             'my_join_field' => [
                 'name' => 'question',
             ],
-        ], '_doc');
+        ], 'doc');
 
         $doc2 = new Document(2, [
             'text' => 'this is the 2nd question',
             'my_join_field' => [
                 'name' => 'question',
             ],
-        ], '_doc');
+        ], 'doc');
 
         $index->addDocuments([$doc1, $doc2]);
 
@@ -145,7 +145,7 @@ class ScriptFieldsTest extends BaseTest
                 'name' => 'answer',
                 'parent' => 1,
             ],
-        ], '_doc', 'testparentid');
+        ], 'doc', 'testparentid');
 
         $doc4 = new Document(4, [
             'text' => 'this is an answer, the 2nd',
@@ -154,7 +154,7 @@ class ScriptFieldsTest extends BaseTest
                 'name' => 'answer',
                 'parent' => 2,
             ],
-        ], '_doc', 'testparentid');
+        ], 'doc', 'testparentid');
 
         $doc5 = new Document(5, [
             'text' => 'this is an answer, the 3rd',
@@ -163,7 +163,7 @@ class ScriptFieldsTest extends BaseTest
                 'name' => 'answer',
                 'parent' => 2,
             ],
-        ], '_doc', 'testparentid');
+        ], 'doc', 'testparentid');
 
         $this->_getClient()->addDocuments([$doc3, $doc4, $doc5], ['routing' => 1]);
         $index->refresh();

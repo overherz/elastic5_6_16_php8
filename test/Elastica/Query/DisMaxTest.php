@@ -56,7 +56,7 @@ class DisMaxTest extends BaseTest
     public function testQuery()
     {
         $index = $this->_createIndex();
-        $type = $index->getType('_doc');
+        $type = $index->getType('doc');
 
         $type->addDocuments([
             new Document(1, ['name' => 'Basel-Stadt']),
@@ -89,7 +89,7 @@ class DisMaxTest extends BaseTest
     public function testQueryArray()
     {
         $index = $this->_createIndex();
-        $type = $index->getType('_doc');
+        $type = $index->getType('doc');
 
         $type->addDocuments([
             new Document(1, ['name' => 'Basel-Stadt']),

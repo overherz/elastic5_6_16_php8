@@ -57,7 +57,7 @@ class SetTest extends BasePipelineTest
         $pipeline->addProcessor($set)->create();
 
         $index = $this->_createIndex();
-        $type = $index->getType('_doc');
+        $type = $index->getType('doc');
 
         // Add document to normal index
         $doc1 = new Document(null, ['name' => 'nicolas', 'package' => 'Elastico']);

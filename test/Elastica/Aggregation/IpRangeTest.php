@@ -12,7 +12,7 @@ class IpRangeTest extends BaseAggregationTest
     protected function _getIndexForTest()
     {
         $index = $this->_createIndex();
-        $type = $index->getType('_doc');
+        $type = $index->getType('doc');
 
         $type->setMapping(new Mapping(null, [
             'address' => ['type' => 'ip'],

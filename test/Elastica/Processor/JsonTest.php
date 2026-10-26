@@ -58,7 +58,7 @@ class JsonTest extends BasePipelineTest
         $pipeline->addProcessor($json)->create();
 
         $index = $this->_createIndex();
-        $type = $index->getType('_doc');
+        $type = $index->getType('doc');
 
         // Add document to normal index
         $doc1 = new Document(null, ['name' => json_encode(['foo' => 2000])]);

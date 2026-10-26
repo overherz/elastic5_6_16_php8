@@ -19,7 +19,7 @@ class EscapeStringTest extends BaseTest
         $index = $this->_createIndex();
         $index->getSettings()->setNumberOfReplicas(0);
 
-        $type = new Type($index, '_doc');
+        $type = new Type($index, 'doc');
 
         $doc = new Document(1, [
             'email' => 'test@test.com', 'username' => 'test 7/6 123', 'test' => ['2', '3', '5'], ]

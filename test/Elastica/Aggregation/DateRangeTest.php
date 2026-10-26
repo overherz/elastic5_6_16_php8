@@ -4,7 +4,6 @@ namespace Elastica\Test\Aggregation;
 
 use Elastica\Aggregation\DateRange;
 use Elastica\Document;
-use Elastica\Exception\ResponseException;
 use Elastica\Query;
 use Elastica\Type\Mapping;
 
@@ -13,7 +12,7 @@ class DateRangeTest extends BaseAggregationTest
     protected function _getIndexForTest()
     {
         $index = $this->_createIndex();
-        $type = $index->getType('_doc');
+        $type = $index->getType('doc');
 
         $type->setMapping(new Mapping(null, [
             'created' => ['type' => 'date', 'format' => 'epoch_millis'],
@@ -70,9 +69,12 @@ class DateRangeTest extends BaseAggregationTest
     }
 
     /**
+     * Elasticsearch 5.6 reads numeric to and from as epoch_millis whatever the format is,
+     * the format only changes the *_as_string output (6.0 started to parse them with the format).
+     *
      * @group functional
      */
-    public function testDateRangeSetFormatAccordingToFormatTargetField()
+    public function testDateRangeSetFormatOnlyAffectsOutput()
     {
         $agg = new DateRange('date');
         $agg->setField('created');
@@ -81,15 +83,8 @@ class DateRangeTest extends BaseAggregationTest
 
         $query = new Query();
         $query->addAggregation($agg);
+        $results = $this->_getIndexForTest()->search($query)->getAggregation('date');
 
-        try {
-            $results = $this->_getIndexForTest()->search($query)->getAggregation('date');
-            $this->fail('Should throw exception to and from parameters in date_range aggregation are interpreted according of the target field');
-        } catch (ResponseException $e) {
-            $error = $e->getResponse()->getFullError();
-
-            $this->assertSame('search_phase_execution_exception', $error['type']);
-            $this->assertStringStartsWith('failed to parse date field', $error['root_cause'][0]['reason']);
-        }
+        $this->assertEquals('22-29-2014', $results['buckets'][0]['to_as_string']);
     }
 }

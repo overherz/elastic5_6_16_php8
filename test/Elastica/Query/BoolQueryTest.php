@@ -91,7 +91,7 @@ class BoolQueryTest extends BaseTest
         $index = new Index($client, 'test');
         $index->create([], true);
 
-        $type = new Type($index, '_doc');
+        $type = new Type($index, 'doc');
 
         $doc = new Document(1, ['id' => 1, 'email' => 'hans@test.com', 'username' => 'hans', 'test' => ['2', '4', '5']]);
         $type->addDocument($doc);
@@ -143,7 +143,7 @@ class BoolQueryTest extends BaseTest
     public function testEmptyBoolQuery()
     {
         $index = $this->_createIndex();
-        $type = new Type($index, '_doc');
+        $type = new Type($index, 'doc');
 
         $docNumber = 3;
         for ($i = 0; $i < $docNumber; ++$i) {

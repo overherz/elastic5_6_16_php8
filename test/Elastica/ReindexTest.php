@@ -18,7 +18,7 @@ class ReindexTest extends Base
     public function testReindex()
     {
         $oldIndex = $this->_createIndex('idx1', true, 2);
-        $this->_addDocs($oldIndex->getType('_doc'), 10);
+        $this->_addDocs($oldIndex->getType('doc'), 10);
 
         $newIndex = $this->_createIndex('idx2', true, 2);
 
@@ -54,14 +54,14 @@ class ReindexTest extends Base
     public function testReindexTypeOption()
     {
         $oldIndex = $this->_createIndex('', true, 2);
-        $type1 = $oldIndex->getType('_doc');
+        $type1 = $oldIndex->getType('doc');
 
         $this->_addDocs($type1, 10);
 
         $newIndex = $this->_createIndex(null, true, 2);
 
         $reindex = new Reindex($oldIndex, $newIndex, [
-            Reindex::TYPE => '_doc',
+            Reindex::TYPE => 'doc',
         ]);
         $reindex->run();
 
@@ -74,7 +74,7 @@ class ReindexTest extends Base
     public function testReindexOpTypeOptionWithProceedSetOnConflicts()
     {
         $oldIndex = $this->_createIndex('idx1', true, 2);
-        $type1 = $oldIndex->getType('_doc');
+        $type1 = $oldIndex->getType('doc');
 
         $docs1 = $this->_addDocs($type1, 10);
 
@@ -102,7 +102,7 @@ class ReindexTest extends Base
     public function testReindexWithQueryOption()
     {
         $oldIndex = $this->_createIndex('idx1', true, 2);
-        $type1 = $oldIndex->getType('_doc');
+        $type1 = $oldIndex->getType('doc');
         $docs1 = $this->_addDocs($type1, 10);
 
         $newIndex = $this->_createIndex('idx2', true, 2);
@@ -127,7 +127,7 @@ class ReindexTest extends Base
     public function testReindexWithSizeOption()
     {
         $oldIndex = $this->_createIndex('idx1', true, 2);
-        $type1 = $oldIndex->getType('_doc');
+        $type1 = $oldIndex->getType('doc');
         $this->_addDocs($type1, 10);
 
         $newIndex = $this->_createIndex('idx2', true, 2);

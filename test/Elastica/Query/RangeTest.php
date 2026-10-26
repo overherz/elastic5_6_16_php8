@@ -16,7 +16,7 @@ class RangeTest extends BaseTest
         $client = $this->_getClient();
         $index = $client->getIndex('test');
         $index->create([], true);
-        $type = $index->getType('_doc');
+        $type = $index->getType('doc');
 
         $type->addDocuments([
             new Document(1, ['age' => 16, 'height' => 140]),

@@ -14,7 +14,7 @@ class TermsTest extends BaseTest
     public function testFilteredSearch()
     {
         $index = $this->_createIndex();
-        $type = $index->getType('_doc');
+        $type = $index->getType('doc');
 
         $type->addDocuments([
             new Document(1, ['name' => 'hello world']),
@@ -43,10 +43,10 @@ class TermsTest extends BaseTest
     public function testFilteredSearchWithLookup()
     {
         $index = $this->_createIndex();
-        $type = $index->getType('_doc');
+        $type = $index->getType('doc');
 
         $lookupIndex = $this->_createIndex('lookup_index');
-        $lookupType = $lookupIndex->getType('_doc');
+        $lookupType = $lookupIndex->getType('doc');
 
         $lookupType->addDocuments([
             new Document(1, ['terms' => ['ruflin', 'nicolas']]),

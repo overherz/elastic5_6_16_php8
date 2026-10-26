@@ -90,7 +90,7 @@ class QueryTest extends BaseTest
     public function testSetSort()
     {
         $index = $this->_createIndex();
-        $type = $index->getType('_doc');
+        $type = $index->getType('doc');
 
         $mapping = new Mapping($type,
             [
@@ -411,7 +411,7 @@ class QueryTest extends BaseTest
     {
         $index = $this->_createIndex();
 
-        $type = new Type($index, '_doc');
+        $type = new Type($index, 'doc');
 
         // Adds 1 document to the index
         $doc1 = new Document(1,
