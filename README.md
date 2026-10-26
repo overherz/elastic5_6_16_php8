@@ -1,14 +1,14 @@
-Elastica 6.2.1 для Elasticsearch 5.6 и PHP 8.4
-=============================================
+Elastica 6.2.1 для Elasticsearch 5.6 и PHP 8.4 / 8.5
+===================================================
 
 Форк [ruflin/Elastica](https://github.com/ruflin/Elastica) 6.2.1 (последний релиз ветки 6.x), доработанный
-для работы с **Elasticsearch 5.6** на **PHP 7.1 – 8.4**. Официально 6.x поддерживает только Elasticsearch 6.x,
+для работы с **Elasticsearch 5.6** на **PHP 7.1 – 8.5**. Официально 6.x поддерживает только Elasticsearch 6.x,
 а ветка 5.x (последний релиз 5.3.6) не работает на PHP 8.
 
 | Что                           | Версии                                               |
 | ----------------------------- | ---------------------------------------------------- |
 | Elasticsearch                 | 5.6.x (тесты на 5.6.16)                              |
-| PHP                           | ^7.1 \|\| ^8.0 (тесты на 7.4 и 8.4)                  |
+| PHP                           | ^7.1 \|\| ^8.0 (тесты на 7.4, 8.4 и 8.5)             |
 | elasticsearch/elasticsearch   | ^6.0 (6.8.4 подходит без изменений)                  |
 | psr/log                       | 1, 2 или 3                                           |
 | guzzlehttp/guzzle             | 6 или 7 (нужен только для транспортов Guzzle и AwsAuthV4) |
@@ -30,9 +30,10 @@ Elastica 6.2.1 для Elasticsearch 5.6 и PHP 8.4
 Отличия от upstream 6.2.1
 -------------------------
 
-**PHP 8.4, psr/log, Guzzle 7**
+**PHP 8.4 и 8.5, psr/log, Guzzle 7**
 
 * Все параметры вида `Type $x = null` объявлены как `?Type $x = null` (в PHP 8.4 неявный nullable deprecated).
+  Для PHP 8.5 отдельных правок не понадобилось: библиотека и тесты работают на нём без deprecation.
 * Удалён `Elastica\Query\Match`: на PHP 8 этот файл не парсится (`match` — ключевое слово). Используйте `Elastica\Query\MatchQuery`.
 * `Elastica\Log::log()` объявлен с `: void`, `psr/log` разрешён `^1.0 || ^2.0 || ^3.0` (Laravel 10+ тянет monolog 3 и psr/log 2/3).
 * Транспорты `Guzzle` и `AwsAuthV4` работают с Guzzle 7 и guzzlehttp/psr7 2. В upstream 6.2.1 с ними любой запрос с телом
@@ -116,8 +117,8 @@ Elastica 6.2.1 для Elasticsearch 5.6 и PHP 8.4
 Тесты
 -----
 
-Тест-сьют upstream, адаптированный под 5.6, проходит на Elasticsearch 5.6.16 (2 узла, ingest-attachment) и на PHP 7.4,
-и на PHP 8.4: unit — 521 тест, functional — 451 тест, 2 пропущены (`weighted_avg` требует 6.4, ещё один пропущен
+Тест-сьют upstream, адаптированный под 5.6, проходит на Elasticsearch 5.6.16 (2 узла, ingest-attachment) на PHP 7.4,
+8.4 и 8.5: unit — 521 тест, functional — 451 тест, 2 пропущены (`weighted_avg` требует 6.4, ещё один пропущен
 и в upstream из-за бага Elasticsearch). Транспорт Guzzle проверен с Guzzle 6.5 и 7.
 
 ```bash
