@@ -13,18 +13,14 @@ Elastica 6.2.1 для Elasticsearch 5.6 и PHP 8.4 / 8.5
 | psr/log                       | 1, 2 или 3                                           |
 | guzzlehttp/guzzle             | 6 или 7 (нужен только для транспортов Guzzle и AwsAuthV4) |
 
-Установка из этого репозитория:
+Установка:
 
-```json
-{
-    "repositories": [
-        {"type": "vcs", "url": "https://github.com/overherz/elastic5_6_16_php8"}
-    ],
-    "require": {
-        "ruflin/elastica": "dev-php84 as 6.2.1"
-    }
-}
+```bash
+composer require overherz/elastic5_6_16_php8:^1.0
 ```
+
+Пакет объявляет `replace` для `ruflin/elastica` 6.2.1. Поэтому вместе с оригинальной Elastica его не поставить: у них
+общий namespace `Elastica\`. Пакеты, которым нужен `ruflin/elastica` 6.x, получат этот форк.
 
 
 Отличия от upstream 6.2.1
