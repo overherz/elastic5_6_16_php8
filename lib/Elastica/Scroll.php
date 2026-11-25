@@ -167,9 +167,15 @@ class Scroll implements \Iterator
             $this->totalPages = $resultSet->count() > 0 ? ceil($resultSet->getTotalHits() / $resultSet->count()) : 0;
         }
 
-        $this->_currentResultSet = $resultSet;
         ++$this->currentPage;
-        $this->_nextScrollId = $resultSet->getResponse()->isOk() && $resultSet->count() > 0 ? $resultSet->getResponse()->getScrollId() : null;
+        $this->_nextScrollId = $resultSet->getResponse()->isOk() ? $resultSet->getResponse()->getScrollId() : null;
+
+        // Elasticsearch keeps the scroll context open for an empty page too: without clear() it lives until the scroll expiry time
+        if (0 === $resultSet->count()) {
+            $this->clear();
+        }
+
+        $this->_currentResultSet = $resultSet;
     }
 
     /**
